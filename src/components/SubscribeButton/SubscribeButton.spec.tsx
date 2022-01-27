@@ -5,14 +5,14 @@ import { useRouter } from "next/router";
 import { SubscribeButton } from ".";
 
 jest.mock("next-auth/client");
-
 jest.mock("next/router");
 
 describe("SubscribeButton Component", () => {
-  it("renders correctly when user is not login", () => {
+
+  it("renders correctly", () => {
     const useSessionMocked = mocked(useSession);
 
-    useSessionMocked.mockRejectedValueOnce([null, false]);
+    useSessionMocked.mockReturnValueOnce([null, false]);
 
     render(<SubscribeButton />);
 
@@ -23,7 +23,7 @@ describe("SubscribeButton Component", () => {
     const signInMocked = mocked(signIn);
     const useSessionMocked = mocked(useSession);
 
-    useSessionMocked.mockRejectedValueOnce([null, false]);
+    useSessionMocked.mockReturnValueOnce([null, false]);
 
     render(<SubscribeButton />);
 
@@ -55,6 +55,8 @@ describe("SubscribeButton Component", () => {
       push: pushMock,
     } as any);
 
+    render(<SubscribeButton />);
+    
     const subscribeButton = screen.getByText("Subscribe Now");
 
     fireEvent.click(subscribeButton);
